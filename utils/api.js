@@ -4,9 +4,10 @@ const contentType = {
   form: "application/x-www-form-urlencoded"
 };
 // 发送请求
-export const request = (method = 'GET') => (url, data, type) => new Promise((resolve, reject) => {
-  let reqType = type ? type : "";
-  reqType = reqType.toLowerCase() === 'json' ? contentType.json : contentType.form;
+export const request = (method = 'GET') => (url, data, type = 'form') => new Promise((resolve, reject) => {
+  // 默认form
+  let reqType = type.toLowerCase() === 'json' ? contentType.json : contentType.form;
+  app.showLoading();
   wx.request({
     url,
     method,
