@@ -4,18 +4,20 @@ const contentType = {
   form: "application/x-www-form-urlencoded"
 };
 // 发送请求
-export const request = (method = 'GET') => (url, data) => new Promise((resolve, reject) => {
+export const request = (method = 'GET') => (url, data, type) => new Promise((resolve, reject) => {
+  let reqType = type ? type : "";
+  reqType = reqType.toLowerCase() === 'json' ? contentType.json : contentType.form;
   wx.request({
     url,
     method,
     data,
     header: {
-      "Content-Type": contentType.form
+      "Content-Type": reqType
     },
-    success(res) { 
-      resolve(res); 
+    success(res) {
+      resolve(res);
     },
-    fail(err) { 
+    fail(err) {
       reject(err);
     },
     complete() {
